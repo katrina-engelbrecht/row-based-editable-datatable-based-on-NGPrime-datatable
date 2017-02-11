@@ -4,19 +4,22 @@
             "vin":"ee8a89d8",
             "brand":"Fiat",
             "year":1987,
-            "color":"Maroon"
+            "color":"Maroon",
+            "saleDate":"07.02.2017"
         },
         {
             "vin":"642b3edc",
             "brand":"Renault",
             "year":1968,
-            "color":"White"
+            "color":"White",
+            "saleDate":"17.02.2017"
         },
         {
             "vin":"19ec7580",
             "brand":"Renault",
             "year":1981,
-            "color":"Black"
+            "color":"Black",
+            "saleDate":"31.01.2017"
         },
         {
             "vin":"39980f30",

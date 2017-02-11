@@ -4,6 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import {DataTableCrudDemo} from './datatabledemo.component';
+import {MyDataTable} from './mydatatable.component';
+
+import {MyDatePipe} from './mydate.pipe';
 
 import { MessagesModule } from 'primeng/primeng';
 import { InputTextModule } from 'primeng/primeng';
@@ -11,12 +15,23 @@ import { PasswordModule } from 'primeng/primeng';
 import { ButtonModule } from 'primeng/primeng';
 import { DataTableModule, SharedModule } from 'primeng/primeng';
 import { DialogModule } from 'primeng/primeng';
+import {SliderModule} from 'primeng/primeng';
+import {DropdownModule} from 'primeng/primeng';
+import {CalendarModule} from 'primeng/primeng';
+import {GrowlModule} from 'primeng/primeng';
+
+
+
+
 
 import { CarService } from './service/carservice';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DataTableCrudDemo,
+    MyDataTable,
+    MyDatePipe
   ],
   imports: [
     BrowserModule,
@@ -29,7 +44,13 @@ import { CarService } from './service/carservice';
     ReactiveFormsModule,
     DataTableModule,
     SharedModule,
-    DialogModule
+    DialogModule,
+    SliderModule,
+    DropdownModule,
+    CalendarModule,
+    GrowlModule
+
+
   ],
   providers: [CarService],
   bootstrap: [AppComponent]
