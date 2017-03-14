@@ -6,12 +6,6 @@ import * as $ from 'jquery';
 
 
 
-// parse a date in dd.mm.yyyy format
-function parseDate(input) {
-    var parts = input.split('.');
-    // new Date(year, month [, day [, hours[, minutes[, seconds[, ms]]]]])
-    return new Date(parts[2], parts[1]-1, parts[0]); // Note: months are 0-based
-}
 @Component({
     selector: 'my-datatable',
     templateUrl: './mydatatable.component.html',
@@ -217,15 +211,27 @@ export class MyDataTable implements OnInit, AfterViewInit,DoCheck {
         this.dateFilter = beforeDateFilter;
     }
 
+    // parse a date in dd.mm.yyyy format
+    /**
+     * since this function is called inside another function, so we have to define it as static
+     * @param input
+     * @returns {Date}
+     */
+    parseDate(input:string):Date {
+        let parts = input.split('.');
+        // new Date(year, month [, day [, hours[, minutes[, seconds[, ms]]]]])
+        return new Date(Number(parts[2]), Number(parts[1])-1, Number(parts[0])); // Note: months are 0-based
+    }
     /**
      * sort string as date with format 'dd.mm.yyyy'
      * @param event
      */
     datesort(event) {
         console.log("order by date");
+        let self=this;
         if (!this.oneRowediting){
                 console.log("datesort event begins");
-            let comparer = function (a: Object, b: Object): number {
+              let comparer = function (a: Object, b: Object): number {
                 let sa = a['saleDate'];
                 let sb = b['saleDate'];
                 let isaempty = false, isbempty = false;
@@ -240,9 +246,9 @@ export class MyDataTable implements OnInit, AfterViewInit,DoCheck {
                 else if (!isaempty && isbempty)
                     return -1;
                 else if (!isaempty && !isbempty) {
-                    let dateA: Date = parseDate(a['saleDate']);
+                    let dateA: Date = self.parseDate(a['saleDate']);
 
-                    let dateB: Date = parseDate(b['saleDate']);
+                    let dateB: Date = self.parseDate(b['saleDate']);
                     if (dateA > dateB)
                         return 1 * event.order;
                     else if (dateA < dateB)
@@ -257,6 +263,7 @@ export class MyDataTable implements OnInit, AfterViewInit,DoCheck {
         }else
             return false;
     }
+
     selectCar(car) {
 
         this.msgs = [];
@@ -264,6 +271,7 @@ export class MyDataTable implements OnInit, AfterViewInit,DoCheck {
     }
 
 }
+
 
 export class PrimeCar {
 
