@@ -4,30 +4,33 @@
         <input #gb type="text" pInputText size="50" placeholder="Global Filter">
     </div>
     <div class="datatable">
-        <!--selectionMode="single" [(selection)]="selectedCar"  (onRowSelect)="onRowSelect($event)"-->
-        <p-dataTable [value]="cars" [paginator]="true" reorderableColumns="true"
-                     rows="10" [responsive]="true" [globalFilter]="gb" #dt [editable]="true" [lazy]="false" [totalRecords]="totalRecords" (onLazyLoad)="loadCarsLazy($event)">
+        <!--selectionMode="single" [(selection)]="selectedCar"  (onRowSelect)="onRowSelect($event)" [editable]="true" -->
+
+        <p-dataTable [value]="cars"  reorderableColumns="true" [rowHover]="true"
+        [paginator]="!oneRowediting" [rowsPerPageOptions]="[5,10,20]" [rows]="10"
+                     [responsive]="true" [globalFilter]="gb" #dt [lazy]="false" [totalRecords]="totalRecords" (onLazyLoad)="loadCarsLazy($event)"
+        >
             <p-header>List of Cars</p-header>
-            <p-column field="vin" header="Vin" [sortable]="true" [filter]="true" filterPlaceholder="Search"  [editable]="true"></p-column>
+            <p-column field="vin" header="Vin" [sortable]="!oneRowediting" [filter]="true" filterPlaceholder="Search"  [editable]="true"></p-column>
             <!--header="Year ({{yearFilter||'No Filter'}})"-->
-            <p-column field="year" [filter]="true" header="Year" filterMatchMode="equals" filterPlaceholder="Search" [sortable]="true"  [editable]="true">
+            <p-column field="year" [filter]="true" header="Year" [sortable]="!oneRowediting" filterMatchMode="equals" filterPlaceholder="Search"   [editable]="true">
                 <!--<template pTemplate="filter" let-col>-->
                     <!--<i class="fa fa-close" (click)="yearFilter=null;dt.filter(null,col.field,col.filterMatchMode)"></i>-->
                     <!--<p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="yearFilter" [min]="1990" [max]="2020" (onSlideEnd)="dt.filter($event.value,col.field,col.filterMatchMode)"></p-slider>-->
                 <!--</template>-->
             </p-column>
-            <p-column field="brand" header="Brand" [sortable]="true" [filter]="true" filterPlaceholder="Search"  [editable]="true"  [style]="{'overflow':'visible'}">
+            <p-column field="brand" header="Brand" [sortable]="!oneRowediting" [filter]="true" filterPlaceholder="Search"  [editable]="true"  [style]="{'overflow':'visible'}">
                 <template let-col let-car="rowData" pTemplate="editor">
                     <p-dropdown [(ngModel)]="car[col.field]" [options]="brands" [autoWidth]="false" [style]="{'width':'100%'}" required="true"></p-dropdown>
                 </template>
             </p-column>
-            <p-column field="color" header="Color" [sortable]="true" [filter]="true" filterPlaceholder="Search" [editable]="true"></p-column>
+            <p-column field="color" header="Color" [sortable]="!oneRowediting" [filter]="true" filterPlaceholder="Search" [editable]="true"></p-column>
             <p-column field="saleDate" header="Sale Date"  sortable="custom" (sortFunction)="datesort($event)"
                       [filter]="true" filterMatchMode="equals" filterPlaceholder="Search" [editable]="true"
                       [style]=" {'overflow':'visible' }">
                 <template pTemplate="filter" let-col >
                     <div>
-                        <p-calendar [(ngModel)]="dateFilter"  dateFormat="dd.mm.yy" (onBlur)=onBlurCalendarInputPrimeng($event,dt,col.field,col.filterMatchMode)
+                        <p-calendar [(ngModel)]="dateFilter" dataType="string" dateFormat="dd.mm.yy" (onBlur)=onBlurCalendarInputPrimeng($event,dt,col.field,col.filterMatchMode)
                                     (onSelect)="onSelectCalendarInputPrimeng($event,dt,col.field,col.filterMatchMode)" [style]="{'width':'100%'}" inputStyleClass="ui-column-filter" placeholder="Search">
                         </p-calendar>
                     </div>
@@ -36,19 +39,26 @@
                     {{car[col.field]}}
                 </template>
                 <template let-col let-car="rowData" pTemplate="editor">
-                    <p-calendar [(ngModel)]="car[col.field]" (onSelect)="onSelectCalendarInputForEditor($event,car,col.field)" dateFormat="dd.mm.yy"
+                    <p-calendar [(ngModel)]="car[col.field]" dataType="string"  (onSelect)="onSelectCalendarInputForEditor($event,car,col.field)" dateFormat="dd.mm.yy"
                                 readonlyInput="readonlyInput" [style]="{'width':'100%'}" ></p-calendar>
                 </template>
             </p-column>
             <p-column header="Operations">
                 <template pTemplate="header">
                     <!--<button type="button" pButton icon="fa-refresh"></button>-->
-                    <i class="fa fa-cog fa-spin fa-3x fa-fw"></i> Operations
+                    <!--<i class="fa fa-cog fa-spin fa-3x fa-fw"></i> -->
+                    Operations
                     <span class="sr-only">Loading...</span>
                 </template>
                 <template let-car="rowData" pTemplate="body">
-                    <button type="button" pButton (click)="selectCar(car)" icon="fa-search"></button>
-                </template>
+                    <myhoverdiv #mydiv1 [hidden]="!mydiv1.inEditing" [car]="car" (sendTable1)="selectCar($event.car)"
+                                (send1RowEditing)="changeOneRowEditing($event)"
+                                [otherRowInEditing]="oneRowediting && !mydiv1.inEditing">
+                    </myhoverdiv>
+                    <myeditdiv [hidden]="!mydiv1.inEditing" (showHover)="mydiv1.hideEdit()"
+                        [car]="car">
+                    </myeditdiv>
+                 </template>
             </p-column>
             <p-footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Add"></button></div></p-footer>
         </p-dataTable>

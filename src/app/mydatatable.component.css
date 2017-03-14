@@ -5,3 +5,16 @@
 /*.data-container {*/
     /*padding: 50px;*/
 /*}*/
+
+
+tr div.showbyhover {
+    display: none!important;
+}
+
+tr:hover div.showbyhover {
+    display:block!important;
+}
+a.disableClick{
+    pointer-events: none!important;
+}
+

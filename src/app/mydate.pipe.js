@@ -1,18 +1,16 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-import { Pipe } from '@angular/core';
+var core_1 = require('@angular/core');
 /*
 since I convert the output of p-calendar from date to string
-so we don't need this pipe in the component any more. by Katrina on 10.02.2017
+so we don't need this pipe in the any more. by Katrina on 10.02.2017
  */
-export var MyDatePipe = (function () {
+var MyDatePipe = (function () {
     function MyDatePipe() {
     }
     MyDatePipe.prototype.transform = function (value) {
@@ -31,9 +29,8 @@ export var MyDatePipe = (function () {
             return value;
     };
     MyDatePipe = __decorate([
-        Pipe({ name: 'mydate' }), 
-        __metadata('design:paramtypes', [])
+        core_1.Pipe({ name: 'mydate' })
     ], MyDatePipe);
     return MyDatePipe;
 }());
-//# sourceMappingURL=mydate.pipe.js.map
+exports.MyDatePipe = MyDatePipe;

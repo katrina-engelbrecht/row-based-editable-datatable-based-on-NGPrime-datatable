@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 /*
 since I convert the output of p-calendar from date to string
-so we don't need this pipe in the component any more. by Katrina on 10.02.2017
+so we don't need this pipe in the any more. by Katrina on 10.02.2017
  */
 @Pipe({name: 'mydate'})
 export class MyDatePipe implements PipeTransform {
